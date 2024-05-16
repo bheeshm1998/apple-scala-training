@@ -1,22 +1,32 @@
+
+
 @main
 def SearchingAndSorting(): Unit = {
-  val array: Array[Int] = Array(7,2,6,1,5,4,3);
+  val array1: Array[Int] = Array(7,2,6,1,5,4,3);
+  val array2: Array[Int] = Array(7,2,6,1,5,4,3);
+  val array3: Array[Int] = Array(7,2,6,1,5,4,3);
+  val array4: Array[Int] = Array(7,2,6,1,5,4,3);
+  val array5: Array[Int] = Array(7,2,6,1,5,4,3);
   val bubble = getAlgorithm("bubble");
   val insertion = getAlgorithm("insertion")
   val mergeSort = getAlgorithm("merge")
   val quicksort = getAlgorithm("quick")
-//  bubble(array);
-//  insertion(array)
-//  mergeSort(array)
-  quickSort(array)
+  val radixSort = getAlgorithm("radix")
+  bubble(array1);
+  insertion(array2)
+  mergeSort(array3)
+  quickSort(array4)
+  radixSort(array5)
   println("BUBBLE SORT")
-  println(array.mkString(", "))
+  println(array1.mkString(", "))
   println("INSERTION SORT")
-  println(array.mkString(", "))
+  println(array2.mkString(", "))
   println("MERGE SORT")
-  println(array.mkString(", "))
+  println(array3.mkString(", "))
   println("QUICK SORT")
-  println(array.mkString(", "))
+  println(array4.mkString(", "))
+  println("RADIX SORT")
+  println(array5.mkString(", "))
 
 }
 
@@ -25,6 +35,8 @@ def getAlgorithm(algoType: String): (Array[Int]) => Unit = {
     case "bubble" => bubbleSort
     case "insertion" => insertionSort
     case "merge" => mergeSort
+    case "quick" => quickSort
+    case "radix" => radixsort
     case _ => (x) => println("Unknown sorting type")
 }
 
@@ -63,14 +75,15 @@ def swap(array: Array[Int], i: Int, j: Int): Unit = {
   array(j) = temp;
 }
 
-def insertionSort(array: Array[Int]): Unit= {
-  val n: Int = array.length;
-  for {
-    i <- 0 until n-1
-    j <- i+1 to 1 by -1
-  } {
-    if (array(j) < array(j - 1)) {
-      swap(array, i, j);
+def insertionSort(arr: Array[Int]): Unit = {
+  val n: Int = arr.length
+  for (i <- 0 to n - 1) {
+    var j = i
+    while (j > 0 && arr(j - 1) > arr(j)) {
+      val temp = arr(j - 1)
+      arr(j - 1) = arr(j)
+      arr(j) = temp
+      j -= 1
     }
   }
 }
@@ -158,6 +171,51 @@ def partition(arr: Array[Int], low: Int, high: Int): Int = {
   i + 1
 }
 
-def radixSort(arr: Array[Int]) : Unit = {
+def getMax(arr: Array[Int]): Int = {
+  val n: Int = arr.length;
+  var max = arr(0)
+  for (i <- 1 until n) {
+    if (arr(i) > max) max = arr(i)
+  }
+  max
+}
 
+def countSort(arr: Array[Int], n: Int, exp: Int): Unit = {
+  val output = new Array[Int](n)
+  val count = new Array[Int](10)
+
+  var i = 0
+  while (i < n) {
+    count((arr(i) / exp) % 10) += 1
+    i += 1
+  }
+
+  i = 1
+  while (i < 10) {
+    count(i) += count(i - 1)
+    i += 1
+  }
+
+  i = n - 1
+  while (i >= 0) {
+    output(count((arr(i) / exp) % 10) - 1) = arr(i)
+    count((arr(i) / exp) % 10) -= 1
+    i -= 1
+  }
+
+  i = 0
+  while (i < n) {
+    arr(i) = output(i)
+    i += 1
+  }
+}
+
+def radixsort(arr: Array[Int]): Unit = {
+  val n: Int = arr.length
+  val m = getMax(arr)
+  var exp = 1
+  while (m / exp > 0) {
+    countSort(arr, n, exp)
+    exp *= 10
+  }
 }
