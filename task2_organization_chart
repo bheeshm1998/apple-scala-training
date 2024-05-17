@@ -1,0 +1,89 @@
+object OrganizationApp extends App {
+
+  val organizationTree = Department("Organization", List(
+    Department("Finance", List(
+      Department("Payments", List(Employee(1, "Ravi", "Chennai"), Employee(2, "Anand", "Sahebganj")))
+    )),
+    Department("Sales", List(
+      Department("Marketing", List(Employee(3, "Rohan", "Kolkata"), Employee(4, "Rakesh", "Mumbai"))),
+      Employee(5, "Ravi", "Mumbai"),
+      Department("Advertisement", List(
+        Employee(6, "Ricky", "Chennai")
+      )),
+      Department("SalesManagement", List())
+    ))
+  ));
+  printOrganizationChart(organizationTree, "   ")
+  println("------ ORGANIZATIONAL CHART ------")
+  var breakloop: Boolean = false;
+  while (!breakloop) {
+    print("Enter the employee details (sno., name, city) or type 'exit' to quit: ")
+    val inputString = scala.io.StdIn.readLine();
+    if (inputString == "" || inputString == "exit") {
+      printOrganizationChart(organizationTree, "   ")
+      breakloop = true;
+    } else {
+      println("input string " + inputString)
+      val Array(serialNo, name, city, department) = inputString.split(",").map(_.trim)
+      println(serialNo + "serial no")
+      println(name + "name")
+      println(city + "city")
+      val employee = Employee(serialNo.toInt, name, city);
+      addRecord(organizationTree, department, employee)
+    }
+  }
+}
+
+case class Employee (sno: Int, name: String, city: String) extends Organization {
+  override def toString: String = {
+    val str: String = s"($sno, $name, $city)"
+    str
+  }
+}
+
+class Organization
+
+case class Department (name: String, children: List[Organization]) extends Organization {
+  override def toString: String = name;
+}
+
+def printOrganizationChart(org: Organization, indent: String = "    "): Unit = {
+
+  org match {
+    case Department(dept, children) => {
+      if (dept == "Organization") println(dept) else println(indent + "└──" + dept)
+      children.foreach(child => printOrganizationChart(child, indent + "   " ))
+    }
+    case Employee(sno, name, city) => println(s"$indent│  ├── ($sno, $name, $city)")
+  }
+}
+
+def addRecord(org: Organization, department: String, employee: Employee): Organization = {
+  def addDepartment(dept: Department): Department = {
+    println("adding a department " + dept.name);
+    if (dept.name == department) {
+      Department(dept.name, dept.children :+ employee)
+    } else {
+      Department(dept.name, dept.children.map {
+        case n: Department => addDepartment(n)
+        case l: Employee => l
+      })
+    }
+  }
+
+  org match {
+    case dept: Department => addDepartment(dept)
+    case _ => org
+  }
+}
+
+/**
+ Take input from the user using the command line prompt, about the serial number, age, name, department
+ Make a print function which is common to all the classes such that they can print the things recursively
+ Take the parent department name also in the input, if not given then put it directly inside the Organization level
+
+ An Organization can have many departments and each department can have multiple employees in it and can also have
+ multiple other departments in it as well. This is just like the directory structure in computer.
+ A directory can have a bunch of files and may also contain other directories as well
+*/
+
