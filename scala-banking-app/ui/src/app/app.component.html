@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<div >
+
+</div>
+<h1 class="bank-name">Banking Application powered by Scala</h1>
+  <div *ngIf="showLoginScreen" class="login-page-container">
+    <div class="signup-container">
+      <h3>Create your account</h3>
+      <div class="container mt-5">
+        <div [formGroup]="simpleForm">
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" formControlName="name">
+            <!--          <div *ngIf="simpleForm.get('name')?.invalid && (simpleForm.get('name')?.dirty || simpleForm.get('name')?.touched)" class="text-danger">-->
+            <!--            Name is required.-->
+            <!--          </div>-->
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" formControlName="email">
+            <!--          <div *ngIf="simpleForm.get('email')?.invalid && (simpleForm.get('email')?.dirty || simpleForm.get('email')?.touched)" class="text-danger">-->
+            <!--            <div *ngIf="simpleForm.get('email')?.errors?.required">Email is required.</div>-->
+            <!--            <div *ngIf="simpleForm.get('email')?.errors?.email">Invalid email address.</div>-->
+            <!--          </div>-->
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" formControlName="password">
+            <!--          <div *ngIf="simpleForm.get('password')?.invalid && (simpleForm.get('password')?.dirty || simpleForm.get('password')?.touched)" class="text-danger">-->
+            <!--            Password is required.-->
+            <!--          </div>-->
+          </div>
+          <div class="mb-3">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" id="phone" formControlName="phoneNumber">
+            <!--          <div *ngIf="simpleForm.get('phone')?.invalid && (simpleForm.get('phone')?.dirty || simpleForm.get('phone')?.touched)" class="text-danger">-->
+            <!--            Phone number is required.-->
+            <!--          </div>-->
+          </div>
+          <div class="mb-3">
+            <label for="role" class="form-label">Account type</label>
+            <select class="form-control" id="role" formControlName="role">
+              <option value="savings">Savings</option>
+              <option value="fd">Fixed Deposit</option>
+<!--              <option value="guest">Guest</option>-->
+            </select>
+            <!--          <div *ngIf="simpleForm.get('role')?.invalid && (simpleForm.get('role')?.dirty || simpleForm.get('role')?.touched)" class="text-danger">-->
+            <!--            Role is required.-->
+            <!--          </div>-->
+          </div>
+          <button class="btn btn-primary" (click)="onSubmit()">Sign up</button>
+        </div>
+      </div>
+    </div>
+    <div class="login-container">
+      <h3>Login to your account</h3>
+      <div class="container mt-5">
+        <div [formGroup]="loginForm">
+
+          <div class="mb-3">
+            <label for="loginId" class="form-label">Customer Id</label>
+            <input type="text" class="form-control" id="loginId" formControlName="userId">
+            <!--          <div *ngIf="simpleForm.get('email')?.invalid && (simpleForm.get('email')?.dirty || simpleForm.get('email')?.touched)" class="text-danger">-->
+            <!--            <div *ngIf="simpleForm.get('email')?.errors?.required">Email is required.</div>-->
+            <!--            <div *ngIf="simpleForm.get('email')?.errors?.email">Invalid email address.</div>-->
+            <!--          </div>-->
+          </div>
+
+          <div class="mb-3">
+            <label for="loginemail" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="loginemail" formControlName="email">
+            <!--          <div *ngIf="simpleForm.get('email')?.invalid && (simpleForm.get('email')?.dirty || simpleForm.get('email')?.touched)" class="text-danger">-->
+            <!--            <div *ngIf="simpleForm.get('email')?.errors?.required">Email is required.</div>-->
+            <!--            <div *ngIf="simpleForm.get('email')?.errors?.email">Invalid email address.</div>-->
+            <!--          </div>-->
+          </div>
+          <div class="mb-3">
+            <label for="loginpassword" class="form-label">Password</label>
+            <input type="password" class="form-control" id="loginpassword" formControlName="password">
+            <!--          <div *ngIf="simpleForm.get('password')?.invalid && (simpleForm.get('password')?.dirty || simpleForm.get('password')?.touched)" class="text-danger">-->
+            <!--            Password is required.-->
+            <!--          </div>-->
+          </div>
+
+          <button class="btn btn-success" (click)="onSubmitLoginForm()">Login</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div *ngIf="!showLoginScreen" class="activity-container">
+    <div class="bank-header">
+<!--      <h1>Laxmi Chit Fund</h1>-->
+      <button class="logout-button btn btn-warning" (click)="onClickLogout()">Logout</button>
+    </div>
+
+    <div class="accounts-info-container">
+      <h3>Username: {{username}}</h3>
+      <h3>Account number: {{currentAccountId}}</h3>
+      <h3>Balance: {{accountBalance}}</h3>
+      <h3>Account Type: {{accountType}}</h3>
+<!--      <h3>User type: {{userRole}}</h3>-->
+    </div>
+    <div class="transactions-container">
+      <div class="deposit-container">
+        <h2>Deposit money</h2>
+        <div class="mb-3">
+          <label for="depositFormInput" class="form-label">Amount to deposit</label>
+          <input [formControl]="depositForm" type="number" class="form-control" id="depositFormInput">
+        </div>
+        <button class="btn btn-primary" (click)="onClickDepositConfirm()">Confirm</button>
+
+      </div>
+      <div class="withdrawal-container">
+        <h2>Withdraw money</h2>
+        <div class="mb-3">
+          <label for="withdrawFormInput" class="form-label">Amount to withdraw</label>
+          <input [formControl]="withdrawForm" type="number" class="form-control" id="withdrawFormInput">
+        </div>
+        <button class="btn btn-primary" (click)="onClickWithdrawConfirm()">Confirm</button>
+      </div>
+      <div class="transfer-container">
+        <h2>Transfer money</h2>
+        <div class="mb-3">
+          <label for="accountNumberFormInput" class="form-label">Account number to transfer to</label>
+          <input [formControl]="transferToAccountNumberForm" type="number" class="form-control" id="accountNumberFormInput">
+
+          <label for="transferAmountFormInput" class="form-label">Amount</label>
+          <input [formControl]="transferAmountForm" type="number" class="form-control" id="transferAmountFormInput">
+        </div>
+        <button class="btn btn-dark" (click)="onClickTransferConfirm()">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
