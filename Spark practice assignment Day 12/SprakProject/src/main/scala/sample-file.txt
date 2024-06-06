@@ -1,0 +1,73 @@
+Data Engg Jun 6
+
+OLTP -> Online transaction processing
+OLAP -> Pnline analytical processing
+For analysis we need real data and substantial amount of data
+Not a goog idea to work on the data directly
+Reformat the data unit simethingekse m caked data warehouse. Querying directly can be very complex and time taking
+ELK - Elastic search (Primary warehouse), Logstach and Kibana
+Excel can do all the things but not at scale and distributed systems.
+
+From the source to the sink, we need to have something which extract the data form the source and formats it according to the requirement and put them into the sunk. That tool is called ETL.
+
+ETL (Extract, Transform, Load) is a fundamental process in data engineering that involves moving data from various sources to a unified repository, typically a data warehouse or data lake. This process enables data analysis and provides actionable business insights by preparing data for consumption and business intelligence processes.
+
+Extraction: Gathering raw data from multiple sources, such as databases, APIs, files, or IoT devices, and combining it into a single data set
+.
+Transformation: Standardizing, cleansing, and transforming the extracted data to match the needs of the organization and the requirements of the target data storage solution. This step involves applying rules and functions to ensure data quality and consistency
+.
+Load: Moving the transformed data into the target repository, such as a data warehouse, data lake, or data lake, where it can be stored and managed for further analysis and use
+
+DATA ENGG -> How do I handle the data at various stages.
+
+Atomicity -> Either the write happens complete, or not at all.
+
+noSql used for storing sim-structured and un structured data
+
+Partition tolerance ->achieved because 0f replication
+
+JOIN queries are very costly operations, especially when the amount of data is huge.
+Normalisation -> disintegrating the table into multiple smaller smaller to have a better organisation of data.
+
+Elastic search -> a database optimised for search operations
+
+Spark -> Distributed processing engine
+Cluster provide two things -> storage (example multiple Kafka topics) and process (example Spark, which provides high velocity, processes things much faster)
+
+Hadoop -> Hdfs (storage layer), Map reduce (processing layer)
+Data is stored in distributed servers
+
+Spark is kind of a library. We need to provide it the cluster to do the processing. The cluster can be one of the many available, example, Hadoop, K8s, Apache mess, Amazon’s Mapreduce, Data bricks etc
+It doesn’t provide storage, but provides CPU and memory.
+Spark recognizes multiple forms of cluster
+
+Primary languages supported are R, Python, Java, Scala
+
+EMR -> Elastic Map reduce
+
+For using Spark, we just some cluster, the Spark library and that’s all, no installation and stuff is needed.
+
+Modes in Spark
+Local (no cluster), client, cluster mode
+Client mode -> if the driver stays in the client
+Cluster mode -> if the driver stays in the cluster
+
+Driver -> acts like a middleman. Analogous to JDBC driver for connecting to database when using Java
+
+The driver’s job is to execute the task on a cluster
+Cluster has got units called as Nodes
+
+Each cluster has got a cluster manager to which the driver talks
+
+When we invoke the driver, the spark contest is established.
+
+If the client is not able to handle a large amount of data, then we should go for cluster mode.
+In Hadoop, yarn is the cluster manager
+
+To study
+Partially applied functions
+Partial functions
+Implicit conversion / implicit types
+Underscore syntax in collection operations
+
+
