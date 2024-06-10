@@ -9,9 +9,7 @@ object Main {
       .config("spark.hadoop.fs.s3a.aws.credentials.provider", "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider")
       .getOrCreate()
 
-    val hadoopConfig = spark.sparkContext.hadoopConfiguration
-//    hadoopConfig.set("fs.s3a.access.key", "")
-//    hadoopConfig.set("fs.s3a.secret.key", "")
+    val hadoopConfig = spark.sparkContext.hadoopConfiguration)
     hadoopConfig.set("fs.s3a.endpoint", "s3.amazonaws.com")
     hadoopConfig.set("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
 
