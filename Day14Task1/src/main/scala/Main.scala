@@ -10,8 +10,8 @@ object Main {
       .getOrCreate()
 
     val hadoopConfig = spark.sparkContext.hadoopConfiguration
-    hadoopConfig.set("fs.s3a.access.key", "AKIA3FLD3W5ORPHKI5JV")
-    hadoopConfig.set("fs.s3a.secret.key", "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")
+//    hadoopConfig.set("fs.s3a.access.key", "AKIA3FLD3W5ORPHKI5JV")
+//    hadoopConfig.set("fs.s3a.secret.key", "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")
     hadoopConfig.set("fs.s3a.endpoint", "s3.amazonaws.com")
     hadoopConfig.set("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
 
