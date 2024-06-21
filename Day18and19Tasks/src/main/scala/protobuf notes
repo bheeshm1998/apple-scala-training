@@ -1,0 +1,58 @@
+Protocol Buffers
+
+It is method for serialising structured data useful for transmitting data over the wire or storing it on disk.
+
+It is just really a message format
+
+Consider that we are sending some json data over the internet. Http 2 by default does some compressing over the data.
+
+Protobuf is a representation of structured data
+Json is not structured data. We can just add anything we want to a json file.
+We have to take care of the correctness of the schema of the Json.
+
+Protobugf forces us to build a schema.
+We have to build a `.proto` file where we tell how our data looks like, for example the data is of an Employee and we need to tell that our employee contains a name, age, salary etc.
+
+ In vs code, an extension is available, `vscode-proto3`
+
+How to write a proto file
+
+First line -> the version goes in, ends with `;`
+
+Most of the things in a `photo` file gets labelled as a message. Example, our Employee object will will be written as a message.
+
+Protobuff is language neutral
+
+A photo file is just a schema definition of my messages and my structured data.
+
+We need to convert the proto file to the file of our choice based on what language we are writing in.
+
+We have something called as protoc file, which stands for photo compiler. It takes in a photo file and the language to which we need to convert to and it gives us the required file.
+
+Download the protocol compiler based on the type of machine (like linux, Mac etc.)
+Note here that the compiler is not language specific.
+
+Finally, binary is what we will be storing to disk and sending over the wire.
+
+The binary file that gets created is of a considerably lower size than say json. Very efficient when transferring stuff.
+
+One of the big advantages of protobuf thing is that we have an schema
+
+A lot of optimisations can be done, if we know schema. It can be read and stored very efficiently
+
+Very less size.
+
+Language neutral in the sense, that we can get the photo file from someone and then we will use the protoc compiler to generate a schema in our language and then we can get the desired objects in our language.
+
+gRPC is built on top of the protobuf thing.
+
+Some cons are also there
+The compiler is provided by compiler and with time will undergo some version changes and pathces. We need to keep our code updated with it. During that process sometimes things can break.
+
+Secondly, using protobuf for small applications can be an overkill. We have to maintain a lot of files which otherwise could have been done is a more easier way.
+
+Thirdly, schemas are not always desired, a lot of times people prefer clarity and ease of doing things over high efficiency.
+There was a reason why people moved from SOAP to REST
+
+
+
